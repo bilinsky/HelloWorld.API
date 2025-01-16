@@ -6,30 +6,25 @@ services:
       context: .
       dockerfile: HelloWorld.API/Dockerfile
     ports:
-      - "5000:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - "5000:80" # Porta exposta para testes externos
     networks:
       evaluation-network:
         aliases:
           - api
-        
 
   gateway:
     build:
       context: .
       dockerfile: HelloWorld.Gateway/Dockerfile
     ports:
-      - "8000:80"
+      - "8000:80" # Porta exposta para acesso externo
     depends_on:
       - api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
     networks:
       evaluation-network:
         aliases:
-          - gateway
+          - ocelot-gateway
 
 networks:
   evaluation-network:
-    driver: bridge
+    external: true
