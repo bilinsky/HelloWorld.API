@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  api:
+    build:
+      context: ./HelloWorld.API
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  gateway:
+    build:
+      context: ./HelloWorld.Gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
