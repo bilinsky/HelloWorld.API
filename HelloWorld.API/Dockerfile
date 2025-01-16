@@ -2,15 +2,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
-# Copia a solução e os arquivos do projeto
-COPY HelloWorld.API.sln ./
-COPY HelloWorld.API/HelloWorld.API.csproj HelloWorld.API/
-RUN dotnet restore
+# Copiar o arquivo de projeto diretamente
+COPY HelloWorld.API/HelloWorld.API.csproj ./HelloWorld.API/
 
-# Copia o restante dos arquivos do projeto
+# Restaurar dependências
+RUN dotnet restore ./HelloWorld.API/HelloWorld.API.csproj
+
+# Copiar o restante dos arquivos do projeto
 COPY HelloWorld.API/ ./HelloWorld.API/
+
+# Publicar o projeto diretamente usando o arquivo .csproj
 WORKDIR /app/HelloWorld.API
-RUN dotnet publish -c Release -o out
+RUN dotnet publish ./HelloWorld.API.csproj -c Release -o out
 
 # Stage 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

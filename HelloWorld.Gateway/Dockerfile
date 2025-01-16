@@ -2,13 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
-# Copia a solução e os arquivos do projeto
-COPY HelloWorld.API.sln ./
-COPY HelloWorld.Gateway/HelloWorld.Gateway.csproj HelloWorld.Gateway/
-RUN dotnet restore
+# Copiar o arquivo de projeto diretamente
+COPY HelloWorld.Gateway/HelloWorld.Gateway.fsproj ./HelloWorld.Gateway/
 
-# Copia o restante dos arquivos do projeto
+# Restaurar dependências
+RUN dotnet restore ./HelloWorld.Gateway/HelloWorld.Gateway.fsproj
+
+# Copiar o restante dos arquivos do projeto
 COPY HelloWorld.Gateway/ ./HelloWorld.Gateway/
+
+# Publicar o projeto Gateway
 WORKDIR /app/HelloWorld.Gateway
 RUN dotnet publish -c Release -o out
 
