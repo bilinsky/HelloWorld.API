@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: HelloWorld.Gateway/Dockerfile
     ports:
-      - "8000:80" # Porta exposta para acesso externo
+      - "8000:8080" # Mapear a porta 8000 do host para a porta 8080 do contêiner
     depends_on:
       - api
     networks:
