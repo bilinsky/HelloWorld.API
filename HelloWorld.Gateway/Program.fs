@@ -1,6 +1,7 @@
 open System
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.Hosting
+open Microsoft.AspNetCore.Hosting
 
 [<EntryPoint>]
 let main args =
