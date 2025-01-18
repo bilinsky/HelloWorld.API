@@ -9,6 +9,8 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
 
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Ocelot" Version="23.4.3" />
+  </ItemGroup>
 
 </Project>
