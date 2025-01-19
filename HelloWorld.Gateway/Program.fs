@@ -8,28 +8,30 @@ open Ocelot.Middleware
 
 [<EntryPoint>]
 let main args =
+    printfn "Iniciando o Gateway..."
+
     let builder = WebApplication.CreateBuilder(args)
 
-    // Configurar logs
+    printfn "Configurando logs..."
     builder.Logging.ClearProviders() |> ignore
     builder.Logging.AddConsole() |> ignore
 
-    // Configurar o Ocelot
+    printfn "Configurando serviços..."
     builder.Services.AddOcelot() |> ignore
 
+    printfn "Construindo o app..."
     let app = builder.Build()
 
-    // Configurar URLs
+    printfn "Configurando URLs..."
     app.Urls.Add("http://0.0.0.0:80")
 
-    // Middleware do Ocelot
+    printfn "Iniciando o Middleware do Ocelot..."
     app.UseOcelot().Wait()
 
-    // Log de inicialização
+    printfn "Iniciando o servidor..."
     let logger: ILogger<obj> = app.Services.GetRequiredService<ILogger<obj>>()
     logger.LogInformation("Ocelot Gateway iniciado e aguardando conexões...")
 
-    // Executar o servidor
     app.Run()
-
     0 // Código de saída
+
