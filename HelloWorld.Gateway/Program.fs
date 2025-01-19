@@ -40,5 +40,4 @@ let main args =
         app.Run()
     else
     printfn "O servidor não pôde ser iniciado devido a erros no middleware."
-    0 // Código de saída
 
