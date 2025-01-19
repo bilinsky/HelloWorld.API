@@ -25,13 +25,20 @@ let main args =
     printfn "Configurando URLs..."
     app.Urls.Add("http://0.0.0.0:80")
 
-    printfn "Iniciando o Middleware do Ocelot..."
-    app.UseOcelot().Wait()
+    let result =
+        try
+            app.UseOcelot().Wait()
+            printfn "Middleware do Ocelot iniciado com sucesso."
+            true
+        with
+        | ex ->
+            printfn "Erro ao iniciar o Middleware do Ocelot: %s" ex.Message
+            false
 
-    printfn "Iniciando o servidor..."
-    let logger: ILogger<obj> = app.Services.GetRequiredService<ILogger<obj>>()
-    logger.LogInformation("Ocelot Gateway iniciado e aguardando conexões...")
-
-    app.Run()
+    if result then
+        printfn "Executando o servidor..."
+        app.Run()
+    else
+    printfn "O servidor não pôde ser iniciado devido a erros no middleware."
     0 // Código de saída
 
