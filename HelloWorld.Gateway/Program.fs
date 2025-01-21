@@ -3,6 +3,7 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
+open Microsoft.Extensions.Configuration
 open Ocelot.DependencyInjection
 open Ocelot.Middleware
 
@@ -16,6 +17,17 @@ let main args =
     builder.Logging.ClearProviders() |> ignore
     builder.Logging.AddConsole() |> ignore
 
+    printfn "Configurando configuração..."
+    builder.Configuration.AddJsonFile("ocelot.json") |> ignore
+
+    // Exibir as configurações carregadas do ocelot.json
+    let routes = builder.Configuration.GetSection("Routes").GetChildren()
+    printfn "Rotas configuradas:"
+    for route in routes do
+        printfn "UpstreamPathTemplate: %s, DownstreamPathTemplate: %s" 
+            (route.GetValue<string>("UpstreamPathTemplate")) 
+            (route.GetValue<string>("DownstreamPathTemplate"))
+
     printfn "Configurando serviços..."
     builder.Services.AddOcelot() |> ignore
 
@@ -23,7 +35,7 @@ let main args =
     let app = builder.Build()
 
     printfn "Configurando URLs..."
-    app.Urls.Add("http://0.0.0.0:80")
+    app.Urls.Add("http://localhost:8000")
 
     let result =
         try
@@ -38,6 +50,7 @@ let main args =
     if result then
         printfn "Executando o servidor..."
         app.Run()
+        0
     else
-    printfn "O servidor não pôde ser iniciado devido a erros no middleware."
-
+        printfn "O servidor não pôde ser iniciado devido a erros no middleware."
+        1
