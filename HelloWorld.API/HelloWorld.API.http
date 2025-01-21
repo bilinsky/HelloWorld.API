@@ -1,4 +1,4 @@
-@HelloWorld.API_HostAddress = http://api:8080
+@HelloWorld.API_HostAddress = http://api:8000
 
 GET {{HelloWorld.API_HostAddress}}/hello/
 Accept: application/json

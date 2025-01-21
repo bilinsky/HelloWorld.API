@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "api",
-          "Port": 8080
+          "Port": 8000
         }
       ],
       "UpstreamPathTemplate": "/api/hello",
