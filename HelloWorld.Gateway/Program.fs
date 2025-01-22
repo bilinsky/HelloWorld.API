@@ -34,8 +34,8 @@ let main args =
     printfn "Construindo o app..."
     let app = builder.Build()
 
-    printfn "Configurando URLs..."
-    app.Urls.Add("http://localhost:8000")
+    //printfn "Configurando URLs..."
+    //app.Urls.Add("http://localhost:8000")
 
     let result =
         try

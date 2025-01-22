@@ -13,11 +13,12 @@ services:
           - api
 
   gateway:
+    container_name: ocelot-gateway
     build:
       context: .
       dockerfile: HelloWorld.Gateway/Dockerfile
     ports:
-      - "7777:8000" # Mapear a porta 8000 do host para a porta 8080 do conteiner
+      - "7777:7777" # Mapear a porta 8000 do host para a porta 8080 do conteiner
     depends_on:
       - api
     networks:

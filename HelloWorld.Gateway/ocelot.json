@@ -14,6 +14,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "ocelot-gateway:8000"
+    "BaseUrl": "ocelot-gateway:7777"
   }
 }

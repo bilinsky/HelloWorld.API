@@ -1,22 +1,17 @@
-# Stage 1: Build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
+EXPOSE 7777
 
-# Copiar o arquivo de projeto diretamente
-COPY HelloWorld.Gateway/HelloWorld.Gateway.fsproj ./HelloWorld.Gateway/
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore "HelloWorld.Gateway/HelloWorld.Gateway.csproj"
+RUN dotnet build "HelloWorld.Gateway/HelloWorld.Gateway.csproj" -c Release -o /app/build
 
-# Restaurar dependências
-RUN dotnet restore ./HelloWorld.Gateway/HelloWorld.Gateway.fsproj
+FROM build AS publish
+RUN dotnet publish "HelloWorld.Gateway/HelloWorld.Gateway.csproj" -c Release -o /app/publish
 
-# Copiar o restante dos arquivos do projeto
-COPY HelloWorld.Gateway/ ./HelloWorld.Gateway/
-
-# Publicar o projeto Gateway
-WORKDIR /app/HelloWorld.Gateway
-RUN dotnet publish -c Release -o out
-
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/HelloWorld.Gateway/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "HelloWorld.Gateway.dll"]
