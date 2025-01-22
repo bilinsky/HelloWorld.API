@@ -25,6 +25,7 @@ services:
       evaluation-network:
         aliases:
           - ocelot-gateway
+    tty: true
 
 networks:
   evaluation-network:
