@@ -16,6 +16,8 @@ let main args =
     printfn "Configurando logs..."
     builder.Logging.ClearProviders() |> ignore
     builder.Logging.AddConsole() |> ignore
+    builder.Logging.SetMinimumLevel(LogLevel.Debug) |> ignore
+
 
     printfn "Configurando configuração..."
     builder.Configuration.AddJsonFile("ocelot.json") |> ignore
