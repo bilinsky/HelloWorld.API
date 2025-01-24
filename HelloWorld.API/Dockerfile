@@ -6,7 +6,7 @@ WORKDIR /app
 COPY HelloWorld.API/HelloWorld.API.csproj ./HelloWorld.API/
 
 # Restaurar dependências
-RUN dotnet restore ./HelloWorld.API/HelloWorld.API.csproj
+RUN dotnet restore ./HelloWorld.API.csproj
 
 # Copiar o restante dos arquivos do projeto
 COPY HelloWorld.API/ ./HelloWorld.API/
