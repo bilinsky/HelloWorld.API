@@ -13,7 +13,7 @@ COPY HelloWorld.API/ ./HelloWorld.API/
 
 # Publicar o projeto diretamente usando o arquivo .csproj
 WORKDIR /app/HelloWorld.API
-RUN dotnet publish ./HelloWorld.API.csproj -c Release -o out
+RUN dotnet publish ./HelloWorld.API/HelloWorld.API.csproj -c Release -o out
 
 # Stage 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0

@@ -11,7 +11,7 @@ RUN dotnet build "HelloWorld.Gateway/HelloWorld.Gateway.fsproj" -c Release -o /a
 FROM build AS publish
 RUN dotnet publish "HelloWorld.Gateway/HelloWorld.Gateway.fsproj" -c Release -o /app/publish
 
-FROM base AS final
+FROM base AS final 
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "HelloWorld.Gateway.dll"]
